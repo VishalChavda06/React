@@ -10,7 +10,7 @@ function App() {
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
-    dispatch(showNotification('Add to Cart successfully'));
+    dispatch(showNotification('Add to Cart successfully Product'));
     setTimeout(() => {
       dispatch(hideNotification());
     }, 2000);
@@ -19,7 +19,7 @@ function App() {
   return (
     <>
       <Notification />
-      <h1 className='text-3xl m-3 text-center mt-3'>Redux-Notification</h1>
+      <h1 className='text-3xl m-3 text-center mt-3'>Redux-Notification in React</h1>
       <div className="max-w-sm mx-auto bg-white rounded-lg shadow-md overflow-hidden mt-8">
         <img className="w-full h-48 object-contain" src="https://m.media-amazon.com/images/I/313KXomNU9L._SX300_SY300_QL70_FMwebp_.jpg" alt="Product" />
         <div className="p-6">
