@@ -6,26 +6,60 @@ import { CiHeart } from "react-icons/ci";
 
 const Navbar = () => {
     return (
-        <div className='container mx-auto flex justify-between items-center px-1 py-5'>
-            <div>
-                <ul className='flex gap-4'>
-                    <li className='flex items-center gap-1'>SHOP <span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="M6 9l6 6 6-6"/></svg></span> </li>
-                    <li className='flex items-center gap-1'>PRODUCTS <span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="M6 9l6 6 6-6"/></svg></span> </li>
-                    <li className='flex items-center gap-1'>BLOG <span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="M6 9l6 6 6-6"/></svg></span> </li>
-                    <li className='flex items-center gap-1'>PAGES <span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="M6 9l6 6 6-6"/></svg></span> </li>
+        <div className='flex justify-between items-center px-10 py-7 bg-white'>
+            {/* Left Section - Navigation Links */}
+            <div className='flex-1'>
+                <ul className='flex gap-6'>
+                    <li className='flex items-center gap-1 text-gray-800 font-medium cursor-pointer hover:text-gray-600 transition-colors'>
+                        SHOP 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M6 9l6 6 6-6" />
+                        </svg>
+                    </li>
+                    <li className='flex items-center gap-1 text-gray-800 font-medium cursor-pointer hover:text-gray-600 transition-colors'>
+                        PRODUCTS 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M6 9l6 6 6-6" />
+                        </svg>
+                    </li>
+                    <li className='flex items-center gap-1 text-gray-800 font-medium cursor-pointer hover:text-gray-600 transition-colors'>
+                        BLOGS 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M6 9l6 6 6-6" />
+                        </svg>
+                    </li>
+                    <li className='flex items-center gap-1 text-gray-800 font-medium cursor-pointer hover:text-gray-600 transition-colors'>
+                        PAGES 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M6 9l6 6 6-6" />
+                        </svg>
+                    </li>
                 </ul>
             </div>
-            <div>
-                <h1 className='text-2xl font-bold'>
-                    <img src="https://gearonextjs.vercel.app/images/logo/logo.svg" alt="" />
-                </h1>
+
+            {/* Center Section - Brand Logo */}
+            <div className='absolute left-1/2 transform -translate-x-1/2'>
+                <img src="https://gearonextjs.vercel.app/images/logo/logo.svg" alt="GearO Logo" className='h-8' />
             </div>
-            <div>
-                <ul className='flex gap-4'>
-                    <li className='text-2xl cursor-pointer' ><CiSearch /></li>
-                    <li className='text-2xl cursor-pointer'><CiUser /></li>
-                    <li className='text-2xl cursor-pointer'><CiShoppingCart /></li>
-                    <li className='text-2xl cursor-pointer'><CiHeart /></li>
+
+            {/* Right Section - Utility Icons */}
+            <div className='flex-1 flex justify-end'>
+                <ul className='flex gap-6'>
+                    <li className='text-xl text-gray-700 cursor-pointer hover:text-gray-900 transition-colors'>
+                        <CiSearch />
+                    </li>
+                    <li className='text-xl text-gray-700 cursor-pointer hover:text-gray-900 transition-colors'>
+                        <CiUser />
+                    </li>
+                    <li className='text-xl text-gray-700 cursor-pointer hover:text-gray-900 transition-colors'>
+                        <CiHeart />
+                    </li>
+                    <li className='text-xl text-gray-700 cursor-pointer hover:text-gray-900 transition-colors relative'>
+                        <CiShoppingCart />
+                        <div className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium">
+                            1
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
