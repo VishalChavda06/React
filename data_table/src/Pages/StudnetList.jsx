@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { FaEdit, FaTrash, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
+import '../actionButtons.css';
 
 const StudnetList = () => {
     const [students, setStudents] = useState([])
@@ -192,18 +193,18 @@ const StudnetList = () => {
                                 <td className='p-3 flex justify-center items-center gap-2'>
                                     <Link
                                         to={`/student-form/${student.id}`}
-                                        className='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg shadow transition-colors duration-150 flex items-center gap-1'
+                                        className="action-btn edit flex items-center gap-1 py-2 px-4 rounded-lg font-semibold shadow"
                                         title="Edit"
                                     >
-                                        <FaEdit className="mr-1" />
+                                        <FaEdit />
                                         Edit
                                     </Link>
                                     <button
-                                        className='bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg shadow transition-colors duration-150 flex items-center gap-1'
+                                        className="action-btn delete flex items-center gap-1 py-2 px-4 rounded-lg font-semibold shadow"
                                         onClick={() => deleteStudent(student.id)}
                                         title="Delete"
                                     >
-                                        <FaTrash className="mr-1" />
+                                        <FaTrash />
                                         Delete
                                     </button>
                                 </td>
