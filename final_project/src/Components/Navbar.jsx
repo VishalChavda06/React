@@ -1,8 +1,9 @@
-import React from 'react'
+
 import { CiSearch } from "react-icons/ci";
 import { CiUser } from "react-icons/ci";
 import { CiShoppingCart } from "react-icons/ci";
 import { CiHeart } from "react-icons/ci";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
     return (
@@ -11,35 +12,38 @@ const Navbar = () => {
             <div className='flex-1'>
                 <ul className='flex gap-6'>
                     <li className='flex items-center gap-1 text-gray-800 font-medium cursor-pointer hover:text-gray-600 transition-colors'>
-                        SHOP 
+                        SHOP
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M6 9l6 6 6-6" />
                         </svg>
                     </li>
                     <li className='flex items-center gap-1 text-gray-800 font-medium cursor-pointer hover:text-gray-600 transition-colors'>
-                        PRODUCTS 
+                        PRODUCTS
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M6 9l6 6 6-6" />
                         </svg>
                     </li>
                     <li className='flex items-center gap-1 text-gray-800 font-medium cursor-pointer hover:text-gray-600 transition-colors'>
-                        BLOGS 
+                        BLOGS
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M6 9l6 6 6-6" />
                         </svg>
                     </li>
                     <li className='flex items-center gap-1 text-gray-800 font-medium cursor-pointer hover:text-gray-600 transition-colors'>
-                        PAGES 
+                        PAGES
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M6 9l6 6 6-6" />
                         </svg>
                     </li>
+
                 </ul>
             </div>
 
             {/* Center Section - Brand Logo */}
             <div className='absolute left-1/2 transform -translate-x-1/2'>
-                <img src="https://gearonextjs.vercel.app/images/logo/logo.svg" alt="GearO Logo" className='h-8' />
+                <Link to="/">
+                    <img src="https://gearonextjs.vercel.app/images/logo/logo.svg" alt="GearO Logo" className='h-8' />
+                </Link>
             </div>
 
             {/* Right Section - Utility Icons */}
@@ -49,7 +53,9 @@ const Navbar = () => {
                         <CiSearch />
                     </li>
                     <li className='text-xl text-gray-700 cursor-pointer hover:text-gray-900 transition-colors'>
-                        <CiUser />
+                        <Link to="/login">
+                            <CiUser />
+                        </Link>
                     </li>
                     <li className='text-xl text-gray-700 cursor-pointer hover:text-gray-900 transition-colors'>
                         <CiHeart />
@@ -63,6 +69,7 @@ const Navbar = () => {
                 </ul>
             </div>
         </div>
+
     )
 }
 

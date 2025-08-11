@@ -1,19 +1,8 @@
-import './App.css'
-import TopHeadline from './Components/TopHeadline'
-import Navbar from './Components/Navbar'
-import Footer from './Components/Footer'
-import ImageBanner from './Components/ImageBanner'
+import './App.css';
+import AppRouter from './router/AppRouter';
 
 function App() {
-
-  return (
-    <>
-   <TopHeadline />
-   <Navbar />
-   <ImageBanner />
-   <Footer />
-    </>
-  )
+  return <AppRouter />;
 }
 
-export default App
+export default App;

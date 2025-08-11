@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './ImageBanner.css';
+import '../styles/ImageBanner.css'
 
 const ImageBanner = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -72,8 +72,8 @@ const ImageBanner = () => {
     <div className="banner-container">
       <div className="banner-carousel">
         <div className="banner-slides-container">
-          <div 
-            className="banner-slides" 
+          <div
+            className="banner-slides"
             style={{ transform: `translateX(-${currentSlide * 100}%)` }}
           >
             {banners.map((banner, index) => (
@@ -87,7 +87,7 @@ const ImageBanner = () => {
                       <button className="banner-button">
                         {banner.buttonText}
                         <svg className="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M5 12h14M12 5l7 7-7 7"/>
+                          <path d="M5 12h14M12 5l7 7-7 7" />
                         </svg>
                       </button>
                     </div>
@@ -101,12 +101,12 @@ const ImageBanner = () => {
         {/* Navigation Buttons */}
         <button className="nav-button nav-prev" onClick={prevSlide}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M15 18l-6-6 6-6"/>
+            <path d="M15 18l-6-6 6-6" />
           </svg>
         </button>
         <button className="nav-button nav-next" onClick={nextSlide}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M9 18l6-6-6-6"/>
+            <path d="M9 18l6-6-6-6" />
           </svg>
         </button>
 
