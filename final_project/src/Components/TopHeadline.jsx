@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router'
 
 const TopHeadline = () => {
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false)
@@ -66,7 +67,7 @@ const TopHeadline = () => {
   const [selectedCurrency, setSelectedCurrency] = useState(currencies[0])
 
   const handlePreviousMessage = () => {
-    setCurrentMessageIndex((prev) => 
+    setCurrentMessageIndex((prev) =>
       prev === 0 ? promotionalMessages.length - 1 : prev - 1
     )
   }
@@ -81,7 +82,7 @@ const TopHeadline = () => {
       <div className="flex items-center space-x-4">
         {/* Language Dropdown */}
         <div className="relative" ref={languageRef}>
-          <div 
+          <div
             className="flex items-center space-x-1 cursor-pointer"
             onClick={() => {
               setShowLanguageDropdown(!showLanguageDropdown)
@@ -93,7 +94,7 @@ const TopHeadline = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
           </div>
-          
+
           {showLanguageDropdown && (
             <div className="absolute top-full left-0 mt-1 bg-white text-gray-800 rounded shadow-lg z-50 min-w-[120px]">
               {languages.map((language) => (
@@ -115,7 +116,7 @@ const TopHeadline = () => {
 
         {/* Currency Dropdown */}
         <div className="relative" ref={currencyRef}>
-          <div 
+          <div
             className="flex items-center space-x-1 cursor-pointer"
             onClick={() => {
               setShowCurrencyDropdown(!showCurrencyDropdown)
@@ -128,7 +129,7 @@ const TopHeadline = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
           </div>
-          
+
           {showCurrencyDropdown && (
             <div className="absolute top-full left-0 mt-1 bg-white text-gray-800 rounded shadow-lg z-50 min-w-[150px]">
               {currencies.map((currency) => (
@@ -152,7 +153,7 @@ const TopHeadline = () => {
 
       {/* Center - Rotating promotional message with navigation buttons */}
       <div className="flex items-center space-x-4">
-        <button 
+        <button
           className="text-white hover:text-gray-300 transition-colors duration-200 p-1 rounded-full hover:bg-gray-700"
           onClick={handlePreviousMessage}
         >
@@ -163,7 +164,7 @@ const TopHeadline = () => {
         <span className="text-sm min-w-[300px] text-center">
           {promotionalMessages[currentMessageIndex].text} <span className="text-gray-300">{promotionalMessages[currentMessageIndex].highlight}</span>
         </span>
-        <button 
+        <button
           className="text-white hover:text-gray-300 transition-colors duration-200 p-1 rounded-full hover:bg-gray-700"
           onClick={handleNextMessage}
         >
@@ -175,7 +176,7 @@ const TopHeadline = () => {
 
       {/* Right side - Navigation links */}
       <div className="flex items-center space-x-6">
-        <a href="#" className="text-sm hover:text-gray-300">About</a>
+        <Link to='about' className="text-sm hover:text-gray-300">About</Link>
         <a href="#" className="text-sm hover:text-gray-300">Contact</a>
         <a href="#" className="text-sm hover:text-gray-300">Location</a>
       </div>

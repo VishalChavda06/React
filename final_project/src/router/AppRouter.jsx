@@ -5,6 +5,7 @@ import TopHeadline from '../Components/TopHeadline';
 import ImageBanner from '../Components/ImageBanner';
 import Login from '../Pages/Login';
 import Register from '../Pages/Register';
+import AboutPage from '../Pages/AboutPage';
 
 const AppRouter = () => {
   return (
@@ -28,6 +29,12 @@ const AppRouter = () => {
             </>
           }
         />
+        <Route
+          path='/about'
+          element={<AboutPage />}
+        >
+
+        </Route>
         {/* Add more routes here as needed */}
       </Routes>
       <Footer />
