@@ -36,16 +36,49 @@ const AboutPage = () => {
         </div>
       </div>
       {/*Side with Banner Context  */}
-      <div className="border mt-10 mx-30 p-2 flex justify-between ">
+      <div className=" mt-10 mx-30 p-2 flex justify-between">
         <div className="p-1 w-[48%]">
           <img src="https://gearonextjs.vercel.app/images/section/box-about.jpg" className="rounded-3xl" alt="" />
         </div>
-        <div className="p-1 w-[48%] flex flex-col gap-4">
-          <div>
-            <h1 className="text-4xl text-center">Danish Design DNA</h1>
+        <div className="p-10 w-[48%] flex flex-col gap-4">
+          <div className="p-1 ">
+            <h1 className="text-4xl ">Danish Design DNA</h1>
+            <p className=" mt-4 text-gray-700 text-[18px]">GearO products reflect the values of craftsmanship, simplicity, functionality and quality materials that define our Danish design roots.</p>
           </div>
 
+          <div className=" p-4 flex mt-2">
+            <div className=" me-2 p-2">icon</div>
+            <div className=" ps-4 p-5">
+              <div><h1 className="font-bold text-xl">Form</h1></div>
+              <div><p>We carefully consider each detail, giving our designs a feeling of pure precision and purposeful craft.</p></div>
+            </div>
+          </div>
+          <div className=" p-4 flex mt-2">
+            <div className=" me-2 p-2">icon</div>
+            <div className=" ps-4 p-5">
+              <div><h1 className="font-bold text-xl">Feel</h1></div>
+              <div><p>Irresistibly crafted. Our products are intuitively inviting and welcoming, appealing to the senses.</p></div>
+            </div>
+          </div>
+          <div className=" p-4 flex mt-2">
+            <div className=" me-2 p-2">icon</div>
+            <div className=" ps-4 p-5">
+              <div><h1 className="font-bold text-xl">Functionality</h1></div>
+              <div><p>Our designs are purposeful, carrying on the Danish tradition of design that values functionality and form.</p></div>
+            </div>
+          </div>
         </div>
+      </div>
+      {/* Meet Out Team's */}
+      <div className="mx-30 p-2">
+        <h1 className="text-center text-4xl">Meet Out Team's</h1>
+        <p className="text-center mt-2 text-gray-700">Discover exceptional experiences through testimonials from our satisfied customers.</p>
+      </div>
+
+      <div className="border flex justify-around mx-30 p-3">
+        <div className="border p-1 "></div>
+        <div className="border  p-1"></div>
+        <div className="border  p-1"></div>
       </div>
 
     </>

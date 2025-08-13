@@ -13,28 +13,10 @@ const AppRouter = () => {
       <TopHeadline />
       <Navbar />
       <Routes>
-        <Route
-          path="/login"
-          element={<Login />}
-        />
-        <Route
-          path="/register"
-          element={<Register />}
-        />
-        <Route
-          path="/"
-          element={
-            <>
-              <ImageBanner />
-            </>
-          }
-        />
-        <Route
-          path='/about'
-          element={<AboutPage />}
-        >
-
-        </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<ImageBanner />} />
+        <Route path='/about' element={<AboutPage />} />
         {/* Add more routes here as needed */}
       </Routes>
       <Footer />
