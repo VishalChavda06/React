@@ -4,26 +4,60 @@ import { collection, addDoc, getDoc, deleteDoc, doc, updateDoc } from 'firebase/
 const bookCollection = collection(db, "books")
 
 // Create Book
-
 export const addBook = async (book) => {
-  await addDoc(bookCollection, book)
+  try {
+    const docRef = await addDoc(bookCollection, book)
+    return { id: docRef.id, ...book }
+  } catch (err) {
+    console.error("Error Adding Book", err)
+    throw err
+  }
 }
 
-// Read Book
-export const getBook = async () => {
-  const readBook = await getDoc(bookCollection);
-  return readBook.doc.map(doc => ({ id: doc.id, ...doc.data() }))
+// Read All Books
+export const getBooks = async () => {
+  try {
+    const snapshot = await getDoc(bookCollection)
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+  } catch (err) {
+    console.error("Error Getting Books", err)
+    throw err
+  }
 }
 
-// Update
-export const updateBook = async () => {
-  const deleteBook = doc(db, "books", id);
-  await updateDoc(deleteBook, updateBook)
+// Read Single Book
+export const getBook = async (id) => {
+  try {
+    const docSnap = await getDoc(doc(bookCollection, id))
+    if (docSnap.exists()) {
+      return { id: docSnap.id, ...docSnap.data() }
+    } else {
+      throw new Error("Book not found")
+    }
+  } catch (err) {
+    console.error("Error Getting Book", err)
+    throw err
+  }
 }
 
-// Delete
+// Update Book
+export const updateBook = async (id, updates) => {
+  try {
+    await updateDoc(doc(bookCollection, id), updates)
+    return { id, ...updates }
+  } catch (err) {
+    console.error("Error Updating Book", err)
+    throw err
+  }
+}
 
-export const delBooks = async () => {
-  const bookDoc = Doc(db, "books", id)
-  await delBooks(bookDoc)
+// Delete Book
+export const delBook = async (id) => {
+  try {
+    await deleteDoc(doc(bookCollection, id))
+    return id
+  } catch (err) {
+    console.error("Error Deleting Book", err)
+    throw err
+  }
 }

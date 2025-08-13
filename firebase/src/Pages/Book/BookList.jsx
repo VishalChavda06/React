@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { getBook, delBooks } from "../../Firebase/BookService"
+import { getBooks, delBook } from "../../Firebase/BookService"
 
 const BookList = () => {
 
@@ -10,14 +10,21 @@ const BookList = () => {
   }, [])
 
   const fetchBooks = async () => {
-    const data = await getBook()
-    setBooks(data)
-    console.log(data)
+    try {
+      const data = await getBooks()
+      setBooks(data)
+    } catch (err) {
+      setBooks([])
+    }
   }
 
   const handleDelete = async (id) => {
-    await delBooks(id)
-    fetchBooks()
+    try {
+      await delBook(id)
+      fetchBooks()
+    } catch (err) {
+      // Optionally handle error
+    }
   }
 
   return (
@@ -37,8 +44,8 @@ const BookList = () => {
               <td className="p-2 border">{book.title}</td>
               <td className="p-2 border">{book.author}</td>
               <td className="p-2 border">
-                <Button className="mr-2">Edit</Button>
-                <Button variant="destructive" onClick={() => handleDelete(book.id)}>Delete</Button>
+                <button className="mr-2">Edit</button>
+                <button variant="destructive" onClick={() => handleDelete(book.id)}>Delete</button>
               </td>
             </tr>
           ))}
