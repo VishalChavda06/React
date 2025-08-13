@@ -1,11 +1,14 @@
-import React from 'react'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import BookList from "./Pages/Book/BookList";
+import AddBook from "./Pages/Book/AddBook"
 
-const App = () => {
+export default function App() {
   return (
-    <div className='text-center text-5xl m-10'>
-      Firebase
-    </div>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<BookList />} />
+        <Route path="/add" element={<AddBook />} />
+      </Routes>
+    </Router>
+  );
 }
-
-export default App
