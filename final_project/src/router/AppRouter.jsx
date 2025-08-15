@@ -6,6 +6,7 @@ import ImageBanner from '../Components/ImageBanner';
 import Login from '../Pages/Login';
 import Register from '../Pages/Register';
 import AboutPage from '../Pages/AboutPage';
+import ContactPage from '../Pages/ContactPage';
 
 const AppRouter = () => {
   return (
@@ -17,6 +18,8 @@ const AppRouter = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<ImageBanner />} />
         <Route path='/about' element={<AboutPage />} />
+        <Route path='/contact' element={<ContactPage />} />
+        
         {/* Add more routes here as needed */}
       </Routes>
       <Footer />

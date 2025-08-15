@@ -177,7 +177,7 @@ const TopHeadline = () => {
       {/* Right side - Navigation links */}
       <div className="flex items-center space-x-6">
         <Link to='about' className="text-sm hover:text-gray-300">About</Link>
-        <a href="#" className="text-sm hover:text-gray-300">Contact</a>
+        <Link to="contact" className="text-sm hover:text-gray-300">Contact</Link>
         <a href="#" className="text-sm hover:text-gray-300">Location</a>
       </div>
     </div>

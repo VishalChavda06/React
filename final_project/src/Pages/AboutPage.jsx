@@ -75,10 +75,28 @@ const AboutPage = () => {
         <p className="text-center mt-2 text-gray-700">Discover exceptional experiences through testimonials from our satisfied customers.</p>
       </div>
 
-      <div className="border flex justify-around mx-30 p-3">
-        <div className="border p-1 "></div>
-        <div className="border  p-1"></div>
-        <div className="border  p-1"></div>
+      <div className=" flex justify-around mx-30 p-3 gap-2.5">
+        <div className=" p-1 ">
+          <img src="https://gearonextjs.vercel.app/images/section/team-1.jpg" className="rounded-xl" alt="" />
+          <div className="mt-5 ps-2">
+            <h4><a href="#" className="text-2xl font-medium">Dr. Emily Stevens</a></h4>
+            <p>Co-Founder</p>
+          </div>
+        </div>
+        <div className=" p-1">
+          <img src="https://gearonextjs.vercel.app/images/section/team-2.jpg" className="rounded-xl" alt="" />
+          <div className="mt-5 ps-2">
+            <h4><a href="#" className="text-2xl font-medium">Michael Cater</a></h4>
+            <p>Chief Operating Officer</p>
+          </div>
+        </div>
+        <div className=" p-1">
+          <img src="https://gearonextjs.vercel.app/images/section/team-3.jpg" className="rounded-xl" alt="" />
+          <div className="mt-5 ps-2">
+            <h4><a href="#" className="text-2xl font-medium">Sarah Martinez</a></h4>
+            <p>Marketing</p>
+          </div>
+        </div>
       </div>
 
     </>
