@@ -2,20 +2,22 @@ import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
-    <div className="h-screen bg-white">
+    <div className="h-screen ">
       {/* Header Section */}
-      <div className="bg-[#ececec] py-12">
+      <div className="h-[250px] text-white py-12 bg-[url('https://gearo-html.vercel.app/images/page-title/page-title-5.jpg')] bg-fixed ">
         <div className="max-w-[1100px] mx-auto px-8">
           <h1 className="text-4xl font-semibold mb-2">Login</h1>
-          <div className="text-base text-black">
-            <Link to="/" className="hover:underline">Homepage</Link> <span>&gt;</span> <span>Account</span>
+          <div className="text-base text-white">
+            <Link to="/" className="hover:underline">
+              Homepage
+            </Link>{" "}
+            <span>&gt;</span> <span>Account</span>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
       <div className="max-w-[1100px] mx-auto mt-12 flex flex-col md:flex-row gap-12 px-8">
-
         {/* Login Form */}
         <div className="flex-1 p-8 bg-white rounded-2xl shadow-md">
           <h2 className="text-2xl font-normal mb-6">Login</h2>
@@ -63,7 +65,6 @@ const Login = () => {
             </button>
           </Link>
         </div>
-
       </div>
     </div>
   );
