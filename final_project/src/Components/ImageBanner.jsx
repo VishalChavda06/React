@@ -10,14 +10,14 @@ const ImageBanner = () => {
     {
       id: 1,
       image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-      title: "Ergonomic Duo Bundle",
+      title: "Ergonomic Chair Pro",
       subtitle: "Get superior support and better posture with ergonomic chairs for long work hours.",
       buttonText: "Explore Collection"
     },
     {
       id: 2,
       image: "https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-      title: "Ergonomic Chair Pro",
+      title: "Wireless Charging Dock",
       subtitle: "Get superior support and better posture with ergonomic chairs for long work hours.",
       buttonText: "Explore Collection"
     },
@@ -74,12 +74,20 @@ const ImageBanner = () => {
         <div className="banner-slides-container">
           <div
             className="banner-slides"
-            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+            style={{ 
+              transform: `translateX(-${currentSlide * 33.33}%)`,
+              transition: 'transform 0.6s ease-in-out'
+            }}
           >
             {banners.map((banner, index) => (
               <div key={banner.id} className="banner-slide">
                 <div className="banner-image-container">
-                  <img src={banner.image} alt={banner.title} className="banner-image" />
+                  <img 
+                    src={banner.image} 
+                    alt={banner.title} 
+                    className="banner-image"
+                    loading="eager"
+                  />
                   <div className="banner-overlay">
                     <div className="banner-content">
                       <h2 className="banner-title">{banner.title}</h2>
