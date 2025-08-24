@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import '../styles/ShoppingCart.css';
 
-const ShoppingCart = ({ isOpen, onClose }) => {
-  const { items, removeFromCart, updateQuantity, getCartTotal, clearCart } = useCart();
+const ShoppingCart = () => {
+  const { items, removeFromCart, updateQuantity, getCartTotal, clearCart, isOpen, closeCart } = useCart();
   const [agreedToTerms, setAgreedToTerms] = useState(false);
 
   const handleQuantityChange = (item, newQuantity) => {
@@ -24,12 +24,12 @@ const ShoppingCart = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="shopping-cart-overlay" onClick={onClose}>
+    <div className="shopping-cart-overlay" onClick={closeCart}>
       <div className="shopping-cart" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="cart-header">
           <h2 className="cart-title">Shopping Cart</h2>
-          <button className="close-button" onClick={onClose}>
+          <button className="close-button" onClick={closeCart}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M18 6L6 18M6 6l12 12" />
             </svg>
@@ -51,7 +51,7 @@ const ShoppingCart = ({ isOpen, onClose }) => {
           {items.length === 0 ? (
             <div className="empty-cart">
               <p>Your cart is empty</p>
-              <button className="continue-shopping-btn" onClick={onClose}>
+              <button className="continue-shopping-btn" onClick={closeCart}>
                 Continue Shopping
               </button>
             </div>
@@ -140,7 +140,7 @@ const ShoppingCart = ({ isOpen, onClose }) => {
             </div>
 
             <div className="checkout-buttons">
-              <button className="view-cart-btn" onClick={onClose}>
+              <button className="view-cart-btn" onClick={closeCart}>
                 View Cart
               </button>
               <button 
@@ -152,7 +152,7 @@ const ShoppingCart = ({ isOpen, onClose }) => {
               </button>
             </div>
 
-            <button className="continue-shopping-link" onClick={onClose}>
+            <button className="continue-shopping-link" onClick={closeCart}>
               Or continue shopping
             </button>
           </div>
@@ -163,3 +163,4 @@ const ShoppingCart = ({ isOpen, onClose }) => {
 };
 
 export default ShoppingCart;
+

@@ -12,21 +12,20 @@ const Navbar = () => {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [hoveredLink, setHoveredLink] = useState(null);
   const [isDropdownHovered, setIsDropdownHovered] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const dropdownTimeoutRef = useRef(null);
   const dropdownRef = useRef(null);
-  const { getCartItemCount } = useCart();
+  const { getCartItemCount, isOpen: isCartOpen, openCart, closeCart } = useCart();
 
   const navigationItems = [
     {
       label: "SHOP",
       hasDropdown: true,
       dropdownItems: [
-        { label: "Shop Grid", link: "/shop-grid" },
+        { label: "Shop Default", link: "/shop-default" },
         { label: "Shop List", link: "/shop-list" },
         { label: "Shop Details", link: "/shop-details" },
-        { label: "Shopping Cart", link: "/cart" },
-        { label: "Checkout", link: "/checkout" },
+        { label: "Shop Cart", link: "/shop-cart" },
+        { label: "Shop Checkout", link: "/shop-checkout" },
       ]
     },
     {
@@ -109,11 +108,11 @@ const Navbar = () => {
   };
 
   const toggleCart = () => {
-    setIsCartOpen(!isCartOpen);
-  };
-
-  const closeCart = () => {
-    setIsCartOpen(false);
+    if (isCartOpen) {
+      closeCart();
+    } else {
+      openCart();
+    }
   };
 
   useEffect(() => {
@@ -236,7 +235,7 @@ const Navbar = () => {
       </div>
 
       {/* Shopping Cart */}
-      <ShoppingCart isOpen={isCartOpen} onClose={closeCart} />
+      <ShoppingCart />
     </>
   );
 };

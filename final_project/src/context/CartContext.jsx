@@ -49,6 +49,18 @@ const cartReducer = (state, action) => {
         items: []
       };
     
+    case 'OPEN_CART':
+      return {
+        ...state,
+        isOpen: true
+      };
+    
+    case 'CLOSE_CART':
+      return {
+        ...state,
+        isOpen: false
+      };
+    
     default:
       return state;
   }
@@ -80,6 +92,8 @@ export const CartProvider = ({ children }) => {
 
   const addToCart = (product) => {
     dispatch({ type: 'ADD_TO_CART', payload: product });
+    // Automatically open cart when adding items
+    dispatch({ type: 'OPEN_CART' });
   };
 
   const removeFromCart = (product) => {
@@ -94,6 +108,14 @@ export const CartProvider = ({ children }) => {
     dispatch({ type: 'CLEAR_CART' });
   };
 
+  const openCart = () => {
+    dispatch({ type: 'OPEN_CART' });
+  };
+
+  const closeCart = () => {
+    dispatch({ type: 'CLOSE_CART' });
+  };
+
   const getCartTotal = () => {
     return state.items.reduce((total, item) => total + (item.price * item.quantity), 0);
   };
@@ -104,10 +126,13 @@ export const CartProvider = ({ children }) => {
 
   const value = {
     items: state.items,
+    isOpen: state.isOpen,
     addToCart,
     removeFromCart,
     updateQuantity,
     clearCart,
+    openCart,
+    closeCart,
     getCartTotal,
     getCartItemCount
   };
@@ -126,3 +151,4 @@ export const useCart = () => {
   }
   return context;
 };
+
