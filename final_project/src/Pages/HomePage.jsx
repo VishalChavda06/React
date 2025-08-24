@@ -1,5 +1,9 @@
 
+import React from 'react';
 import ImageBanner from '../Components/ImageBanner';
+import YouMayAlsoLike from '../Components/YouMayAlsoLike';
+import { useCart } from '../context/CartContext';
+import '../styles/HomeCategories.css';
 
 const categories = [
   {
@@ -126,6 +130,14 @@ const products = [
 ];
 
 const HomePage = () => {
+  const { addToCart } = useCart();
+
+  const handleAddToCart = (product) => {
+    addToCart(product);
+    // You can add a toast notification here if you want
+    console.log(`${product.name} added to cart!`);
+  };
+
   return (
     <>
       <ImageBanner />
@@ -193,6 +205,8 @@ const HomePage = () => {
       </section>
 
       
+      
+
       {/* Our Picks For You Section */}
       <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
@@ -260,7 +274,10 @@ const HomePage = () => {
 
                     {/* Add to Cart Button - Rectangular button at bottom of image */}
                     <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-                      <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200 shadow-lg hover:shadow-xl">
+                      <button 
+                        className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200 shadow-lg hover:shadow-xl"
+                        onClick={() => handleAddToCart(product)}
+                      >
                         Add To Cart
                       </button>
                     </div>

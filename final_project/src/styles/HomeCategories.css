@@ -53,3 +53,55 @@
   color: #666;
   border-bottom: 2px solid #666;
 }
+
+/* Shopping Cart Preview Styles */
+.shopping-cart-preview {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.cart-preview-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.free-shipping-banner {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 8px;
+}
+
+.shipping-icon {
+  display: flex;
+  align-items: center;
+}
+
+.cart-preview-message {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6b7280;
+}
+
+.cart-preview-message p:first-child {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  color: #374151;
+}

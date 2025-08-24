@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useCart } from '../context/CartContext';
 import '../styles/ImageBanner.css'
 
 const ImageBanner = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const autoPlayRef = useRef(null);
+  const { addToCart } = useCart();
 
   const banners = [
     {
@@ -12,28 +14,40 @@ const ImageBanner = () => {
       image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
       title: "Ergonomic Chair Pro",
       subtitle: "Get superior support and better posture with ergonomic chairs for long work hours.",
-      buttonText: "Explore Collection"
+      buttonText: "Add To Cart",
+      price: 59.99,
+      selectedColor: 0,
+      colors: ['#f5f5f5', '#d3d3d3']
     },
     {
       id: 2,
       image: "https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
       title: "Wireless Charging Dock",
       subtitle: "Get superior support and better posture with ergonomic chairs for long work hours.",
-      buttonText: "Explore Collection"
+      buttonText: "Add To Cart",
+      price: 59.99,
+      selectedColor: 0,
+      colors: ['#000000', '#808080']
     },
     {
       id: 3,
       image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
       title: "Premium Office Solutions",
       subtitle: "Transform your workspace with our premium office furniture collection.",
-      buttonText: "Shop Now"
+      buttonText: "Add To Cart",
+      price: 59.99,
+      selectedColor: 0,
+      colors: ['#d2b48c', '#ffc0cb']
     },
     {
       id: 4,
       image: "https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
       title: "Smart Home Office",
       subtitle: "Create the perfect work environment with our smart office solutions.",
-      buttonText: "Learn More"
+      buttonText: "Add To Cart",
+      price: 59.99,
+      selectedColor: 0,
+      colors: ['#87ceeb', '#f5f5f5']
     }
   ];
 
@@ -47,6 +61,11 @@ const ImageBanner = () => {
 
   const goToSlide = (index) => {
     setCurrentSlide(index);
+  };
+
+  const handleAddToCart = (banner) => {
+    addToCart(banner);
+    console.log(`${banner.title} added to cart!`);
   };
 
   // Auto-play functionality
@@ -92,7 +111,11 @@ const ImageBanner = () => {
                     <div className="banner-content">
                       <h2 className="banner-title">{banner.title}</h2>
                       <p className="banner-subtitle">{banner.subtitle}</p>
-                      <button className="banner-button">
+                      <div className="banner-price">${banner.price}</div>
+                      <button 
+                        className="banner-button"
+                        onClick={() => handleAddToCart(banner)}
+                      >
                         {banner.buttonText}
                         <svg className="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                           <path d="M5 12h14M12 5l7 7-7 7" />

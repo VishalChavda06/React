@@ -137,11 +137,24 @@
 
 .banner-subtitle {
   font-size: 1.2rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1rem;
   opacity: 0.95;
   line-height: 1.7;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
   font-weight: 400;
+}
+
+.banner-price {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 8px 16px;
+  border-radius: 20px;
+  display: inline-block;
+  backdrop-filter: blur(10px);
 }
 
 .banner-button {
