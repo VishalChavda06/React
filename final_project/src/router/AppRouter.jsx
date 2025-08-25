@@ -9,6 +9,7 @@ import ContactPage from '../Pages/ContactPage';
 import LocationPage from '../Pages/LocationPage';
 import HomePage from '../Pages/HomePage';
 import BlogListPage from '../Pages/BlogListPage';
+import ShopDefaultPage from '../Pages/ShopDefaultPage';
 
 const AppRouter = () => {
   return (
@@ -23,6 +24,7 @@ const AppRouter = () => {
         <Route path='/contact' element={<ContactPage />} />
         <Route path='/location' element={<LocationPage />} />
         <Route path='/blog-list' element={<BlogListPage />} />
+        <Route path='/shop-default' element={<ShopDefaultPage />} />
         {/* Add more routes here as needed */}
       </Routes>
       <Footer />
