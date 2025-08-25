@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CiFilter, CiHeart, CiShoppingCart } from 'react-icons/ci';
 
-const ShopDefaultPage = () => {
-  const [gridView, setGridView] = useState(4); // 2, 3, or 4 columns
+const ShopListPage = () => {
+  const [gridView, setGridView] = useState(1); // 1, 2, or 3 columns for list view
   const [sortBy, setSortBy] = useState('best-selling');
   const [showSaleOnly, setShowSaleOnly] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -11,8 +11,9 @@ const ShopDefaultPage = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [priceRange, setPriceRange] = useState([0, 500]);
+  const [hoveredProduct, setHoveredProduct] = useState(null);
 
-  // Mock product data with working placeholder images
+  // Mock product data with working placeholder images and hover images
   const products = [
     {
       id: 1,
@@ -20,11 +21,13 @@ const ShopDefaultPage = () => {
       originalPrice: 98.00,
       salePrice: 79.99,
       image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop",
+      hoverImage: "https://images.unsplash.com/photo-1592078615290-033ee584e267?w=400&h=400&fit=crop",
       colors: ["#D3D3D3", "#FFFFFF"],
       isOnSale: true,
       discount: "-18%",
       category: "Chairs",
-      size: "Free Size"
+      size: "Free Size",
+      description: "Grounded in principles of simplicity and craftsmanship, Seoul's clean lines and understated elegance pay homage to the timeless design traditions that have defined Danish design for generations."
     },
     {
       id: 2,
@@ -32,11 +35,13 @@ const ShopDefaultPage = () => {
       originalPrice: 98.00,
       salePrice: 69.99,
       image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&h=400&fit=crop",
+      hoverImage: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop",
       colors: ["#FFFFFF", "#D3D3D3"],
       isOnSale: true,
       discount: "-25%",
       category: "Accessories",
-      size: "M"
+      size: "M",
+      description: "Grounded in principles of simplicity and craftsmanship, Seoul's clean lines and understated elegance pay homage to the timeless design traditions that have defined Danish design for generations."
     },
     {
       id: 3,
@@ -44,11 +49,13 @@ const ShopDefaultPage = () => {
       originalPrice: 98.00,
       salePrice: 69.99,
       image: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400&h=400&fit=crop",
+      hoverImage: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&h=400&fit=crop",
       colors: ["#228B22", "#D2691E"],
       isOnSale: true,
       discount: "-25%",
       category: "Accessories",
-      size: "L"
+      size: "L",
+      description: "Grounded in principles of simplicity and craftsmanship, Seoul's clean lines and understated elegance pay homage to the timeless design traditions that have defined Danish design for generations."
     },
     {
       id: 4,
@@ -56,10 +63,12 @@ const ShopDefaultPage = () => {
       originalPrice: 98.00,
       salePrice: 79.99,
       image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=400&fit=crop",
+      hoverImage: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop",
       colors: ["#D2691E", "#FFB6C1", "#808080"],
       isOnSale: false,
       category: "Desks",
-      size: "Free Size"
+      size: "Free Size",
+      description: "Grounded in principles of simplicity and craftsmanship, Seoul's clean lines and understated elegance pay homage to the timeless design traditions that have defined Danish design for generations."
     },
     {
       id: 5,
@@ -67,11 +76,13 @@ const ShopDefaultPage = () => {
       originalPrice: 98.00,
       salePrice: 69.99,
       image: "https://images.unsplash.com/photo-1609592806598-ef25b0bbf0c9?w=400&h=400&fit=crop",
+      hoverImage: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400&h=400&fit=crop",
       colors: ["#000000"],
       isOnSale: true,
       discount: "-25%",
       category: "Electronics",
-      size: "S"
+      size: "S",
+      description: "Grounded in principles of simplicity and craftsmanship, Seoul's clean lines and understated elegance pay homage to the timeless design traditions that have defined Danish design for generations."
     },
     {
       id: 6,
@@ -79,10 +90,12 @@ const ShopDefaultPage = () => {
       originalPrice: 98.00,
       salePrice: 79.99,
       image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop",
+      hoverImage: "https://images.unsplash.com/photo-1592078615290-033ee584e267?w=400&h=400&fit=crop",
       colors: ["#87CEEB"],
       isOnSale: false,
       category: "Chairs",
-      size: "Free Size"
+      size: "Free Size",
+      description: "Grounded in principles of simplicity and craftsmanship, Seoul's clean lines and understated elegance pay homage to the timeless design traditions that have defined Danish design for generations."
     },
     {
       id: 7,
@@ -90,11 +103,13 @@ const ShopDefaultPage = () => {
       originalPrice: 98.00,
       salePrice: 69.99,
       image: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400&h=400&fit=crop",
+      hoverImage: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&h=400&fit=crop",
       colors: ["#D2691E"],
       isOnSale: true,
       discount: "-25%",
       category: "Accessories",
-      size: "M"
+      size: "M",
+      description: "Grounded in principles of simplicity and craftsmanship, Seoul's clean lines and understated elegance pay homage to the timeless design traditions that have defined Danish design for generations."
     },
     {
       id: 8,
@@ -102,10 +117,12 @@ const ShopDefaultPage = () => {
       originalPrice: 98.00,
       salePrice: 79.99,
       image: "https://images.unsplash.com/photo-1609592806598-ef25b0bbf0c9?w=400&h=400&fit=crop",
+      hoverImage: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400&h=400&fit=crop",
       colors: ["#000000"],
       isOnSale: false,
       category: "Electronics",
-      size: "L"
+      size: "L",
+      description: "Grounded in principles of simplicity and craftsmanship, Seoul's clean lines and understated elegance pay homage to the timeless design traditions that have defined Danish design for generations."
     }
   ];
 
@@ -163,16 +180,16 @@ const ShopDefaultPage = () => {
   const endIndex = startIndex + productsPerPage;
   const currentProducts = sortedProducts.slice(startIndex, endIndex);
 
-  const getGridClasses = () => {
+  const getListLayoutClasses = () => {
     switch (gridView) {
+      case 1:
+        return "space-y-6 max-w-4xl mx-auto"; // Single column, centered with spacing
       case 2:
-        return "grid-cols-2";
+        return "grid grid-cols-1 lg:grid-cols-2 gap-8 items-start"; // Two columns on large screens
       case 3:
-        return "grid-cols-3";
-      case 4:
-        return "grid-cols-4";
+        return "grid grid-cols-1 lg:grid-cols-3 gap-8 items-start"; // Three columns on large screens
       default:
-        return "grid-cols-4";
+        return "space-y-6 max-w-4xl mx-auto"; // Single column by default with spacing
     }
   };
 
@@ -205,14 +222,14 @@ const ShopDefaultPage = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <div className="h-[250px] text-white py-12 bg-[url('https://gearo-html.vercel.app/images/page-title/page-title-9.jpg')] bg-fixed bg-cover bg-center">
+      <div className="h-[250px] text-white py-12 bg-[url('https://gearo-html.vercel.app/images/page-title/page-title-10.jpg')] bg-fixed bg-cover bg-center">
         <div className="max-w-[1100px] mx-auto px-8">
-          <h1 className="text-4xl font-semibold mb-2">Shop Default</h1>
+          <h1 className="text-4xl font-semibold mb-2">Shop List</h1>
           <div className="text-base text-white">
             <Link to="/" className="hover:underline">
               Homepage
             </Link>{" "}
-            <span>&gt;</span> <span>Shop Default</span>
+            <span>&gt;</span> <span>Shop List</span>
           </div>
         </div>
       </div>
@@ -241,13 +258,25 @@ const ShopDefaultPage = () => {
             </label>
           </div>
 
-          {/* Center - Grid View Options */}
+          {/* Center - List View Options */}
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => setGridView(1)}
+              className={`p-2 rounded-lg transition-colors ${
+                gridView === 1 ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+              title="Single Column List"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2zM3 16a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2z" />
+              </svg>
+            </button>
             <button
               onClick={() => setGridView(2)}
               className={`p-2 rounded-lg transition-colors ${
                 gridView === 2 ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
+              title="Two Column List"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
@@ -258,19 +287,10 @@ const ShopDefaultPage = () => {
               className={`p-2 rounded-lg transition-colors ${
                 gridView === 3 ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
+              title="Three Column List"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1v-4zM12 9a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1v-4a1 1 0 00-1-1h-4z" />
-              </svg>
-            </button>
-            <button
-              onClick={() => setGridView(4)}
-              className={`p-2 rounded-lg transition-colors ${
-                gridView === 4 ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1v-4zM12 9a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1v-4a1 1 0 00-1-1h-4zM3 16a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2zM12 16a1 1 0 00-1 1v2a1 1 0 001 1h4a1 1 0 001-1v-2a1 1 0 00-1-1h-4z" />
               </svg>
             </button>
           </div>
@@ -292,70 +312,89 @@ const ShopDefaultPage = () => {
           </div>
         </div>
 
-        {/* Products Grid */}
-        <div className={`grid ${getGridClasses()} gap-6 mb-8`}>
+        {/* Products List View */}
+        <div className={`${getListLayoutClasses()} mb-8`}>
           {currentProducts.map((product) => (
-            <div key={product.id} className="group bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
-              {/* Product Image */}
-              <div className="relative overflow-hidden rounded-t-lg">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                {product.isOnSale && (
-                  <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full font-medium">
-                    {product.discount}
-                  </div>
-                )}
-                
-                {/* Action Buttons */}
-                <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors">
-                    <CiHeart className="text-gray-600" />
-                  </button>
-                  <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors">
-                    <svg className="w-4 h-4 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </button>
-                  <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors">
-                    <svg className="w-4 h-4 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                      <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-
-              {/* Product Info */}
-              <div className="p-4">
-                <h3 className="font-medium text-gray-900 mb-2 line-clamp-2">{product.name}</h3>
-                
-                {/* Price */}
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-lg font-semibold text-blue-600">${product.salePrice}</span>
+            <div key={product.id} className="group bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 border border-gray-100 h-full">
+              <div className="flex flex-col lg:flex-row h-full">
+                {/* Product Image */}
+                <div className="relative overflow-hidden rounded-t-lg lg:rounded-l-lg lg:rounded-t-none lg:w-80 lg:h-80 w-full h-64 flex-shrink-0">
+                  <img
+                    src={hoveredProduct === product.id ? product.hoverImage : product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover transition-opacity duration-300"
+                    onMouseEnter={() => setHoveredProduct(product.id)}
+                    onMouseLeave={() => setHoveredProduct(null)}
+                  />
                   {product.isOnSale && (
-                    <span className="text-sm text-gray-500 line-through">${product.originalPrice}</span>
+                    <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full font-medium">
+                      {product.discount}
+                    </div>
                   )}
+                  
+                  {/* Action Buttons */}
+                  <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors">
+                      <CiHeart className="text-gray-600" />
+                    </button>
+                    <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors">
+                      <svg className="w-4 h-4 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </button>
+                    <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors">
+                      <svg className="w-4 h-4 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                        <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
 
-                {/* Color Options */}
-                <div className="flex gap-2 mb-4">
-                  {product.colors.map((color, index) => (
-                    <div
-                      key={index}
-                      className="w-4 h-4 rounded-full border-2 border-gray-300 cursor-pointer hover:border-gray-400"
-                      style={{ backgroundColor: color }}
-                    />
-                  ))}
-                </div>
+                {/* Product Info */}
+                <div className="flex-1 p-4 lg:p-6 flex flex-col">
+                  <div className="flex flex-col flex-1">
+                    {/* Header */}
+                    <div className="mb-4">
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2">{product.name}</h3>
+                      
+                      {/* Price */}
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="text-2xl font-bold text-blue-600">${product.salePrice}</span>
+                        {product.isOnSale && (
+                          <span className="text-lg text-gray-500 line-through">${product.originalPrice}</span>
+                        )}
+                      </div>
 
-                {/* Add to Cart Button */}
-                <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
-                  <CiShoppingCart />
-                  Add To Cart
-                </button>
+                      {/* Description */}
+                      <p className="text-gray-600 text-sm lg:text-base leading-relaxed mb-4 line-clamp-3">
+                        {product.description}
+                      </p>
+                    </div>
+
+                    {/* Color Options */}
+                    <div className="mb-6">
+                      <span className="text-sm font-medium text-gray-700 mb-2 block">Color:</span>
+                      <div className="flex gap-2">
+                        {product.colors.map((color, index) => (
+                          <div
+                            key={index}
+                            className="w-6 h-6 rounded-full border-2 border-gray-300 cursor-pointer hover:border-gray-400 transition-colors"
+                            style={{ backgroundColor: color }}
+                          />
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Footer */}
+                    <div className="mt-auto">
+                      <button className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 font-medium">
+                        <CiShoppingCart />
+                        Add To Cart
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           ))}
@@ -517,4 +556,4 @@ const ShopDefaultPage = () => {
   );
 };
 
-export default ShopDefaultPage;
+export default ShopListPage;
