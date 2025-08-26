@@ -5,6 +5,7 @@ import { CiHeart } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { useCart } from "../context/CartContext";
+import { useWishlist } from "../context/WishlistContext";
 import ShoppingCart from "./ShoppingCart";
 import "../styles/Navbar.css";
 
@@ -15,6 +16,7 @@ const Navbar = () => {
   const dropdownTimeoutRef = useRef(null);
   const dropdownRef = useRef(null);
   const { getCartItemCount, isOpen: isCartOpen, openCart, closeCart } = useCart();
+  const { getWishlistCount } = useWishlist();
 
   const navigationItems = [
     {
@@ -23,6 +25,7 @@ const Navbar = () => {
       dropdownItems: [
         { label: "Shop Default", link: "/shop-default" },
         { label: "Shop List", link: "/shop-list" },
+        { label: "Wishlist", link: "/wishlist" },
         { label: "Shop Details", link: "/shop-details" },
         { label: "Shop Cart", link: "/shop-cart" },
         { label: "Shop Checkout", link: "/shop-checkout" },
@@ -217,8 +220,15 @@ const Navbar = () => {
                     <CiUser />
                   </Link>
                 </li>
-                <li className="text-xl text-gray-700 cursor-pointer hover:text-gray-900 transition-colors duration-200 hover:scale-110">
-                  <CiHeart />
+                <li className="text-xl text-gray-700 cursor-pointer hover:text-gray-900 transition-colors duration-200 hover:scale-110 relative">
+                  <Link to="/wishlist">
+                    <CiHeart />
+                  </Link>
+                  {getWishlistCount() > 0 && (
+                    <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium animate-pulse">
+                      {getWishlistCount()}
+                    </div>
+                  )}
                 </li>
                 <li className="text-xl text-gray-700 cursor-pointer hover:text-gray-900 transition-colors duration-200 hover:scale-110 relative">
                   <CiShoppingCart onClick={toggleCart} />

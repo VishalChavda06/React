@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CiFilter, CiHeart, CiShoppingCart } from 'react-icons/ci';
+import { useWishlist } from '../context/WishlistContext';
 
 const ShopListPage = () => {
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   const [gridView, setGridView] = useState(1); // 1, 2, or 3 columns for list view
   const [sortBy, setSortBy] = useState('best-selling');
   const [showSaleOnly, setShowSaleOnly] = useState(false);
@@ -219,6 +221,14 @@ const ShopListPage = () => {
     setCurrentPage(1);
   };
 
+  const handleWishlistToggle = (product) => {
+    if (isInWishlist(product.id)) {
+      removeFromWishlist(product);
+    } else {
+      addToWishlist(product);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
@@ -334,8 +344,16 @@ const ShopListPage = () => {
                   
                   {/* Action Buttons */}
                   <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors">
-                      <CiHeart className="text-gray-600" />
+                    <button 
+                      onClick={() => handleWishlistToggle(product)}
+                      className={`w-8 h-8 rounded-full flex items-center justify-center shadow-md transition-colors ${
+                        isInWishlist(product.id) 
+                          ? 'bg-red-500 hover:bg-red-600' 
+                          : 'bg-white hover:bg-gray-50'
+                      }`}
+                      title={isInWishlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
+                    >
+                      <CiHeart className={`${isInWishlist(product.id) ? 'text-white' : 'text-gray-600'}`} />
                     </button>
                     <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors">
                       <svg className="w-4 h-4 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
