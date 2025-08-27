@@ -3,6 +3,8 @@ import React from 'react';
 import ImageBanner from '../Components/ImageBanner';
 import YouMayAlsoLike from '../Components/YouMayAlsoLike';
 import { useCart } from '../context/CartContext';
+import { useWishlist } from '../context/WishlistContext';
+import { Link } from 'react-router-dom';
 import '../styles/HomeCategories.css';
 
 const categories = [
@@ -131,6 +133,7 @@ const products = [
 
 const HomePage = () => {
   const { addToCart } = useCart();
+  const { addToWishlist, removeFromWishlist, isInWishlist, items: wishlistItems } = useWishlist();
 
   const handleAddToCart = (product) => {
     addToCart(product);
@@ -138,8 +141,21 @@ const HomePage = () => {
     console.log(`${product.name} added to cart!`);
   };
 
+  const handleWishlistToggle = (product) => {
+    console.log('Wishlist toggle clicked for:', product.name);
+    if (isInWishlist(product.id)) {
+      removeFromWishlist(product);
+      console.log(`${product.name} removed from wishlist!`);
+    } else {
+      addToWishlist(product);
+      console.log(`${product.name} added to wishlist!`);
+    }
+  };
+
   return (
     <>
+
+      
       <ImageBanner />
       <section className="flex flex-col items-center my-20 px-4 mt-10s">
         <div
@@ -225,6 +241,7 @@ const HomePage = () => {
             {products.map((product) => (
               <div key={product.id} className="group">
                 <div className="relative bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+                <Link to={`/product/${product.id}`} className="block">
                   {/* Discount Badge */}
                   {product.discount && (
                     <div className="absolute top-3 left-3 z-10">
@@ -250,8 +267,16 @@ const HomePage = () => {
                     {/* Hover Icons */}
                     <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-4 group-hover:translate-x-0">
                       {/* Wishlist Icon */}
-                      <button className="w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-red-50 hover:scale-110 transition-all duration-300">
-                        <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <button 
+                        className="w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-red-50 hover:scale-110 transition-all duration-300"
+                        onClick={() => handleWishlistToggle(product)}
+                      >
+                        <svg 
+                          className={`w-5 h-5 ${isInWishlist(product.id) ? 'text-red-500' : 'text-gray-600'}`} 
+                          fill={isInWishlist(product.id) ? "currentColor" : "none"} 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                        >
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                         </svg>
                       </button>
@@ -326,12 +351,15 @@ const HomePage = () => {
                       ))}
                     </div>
                   </div>
-                </div>
+                </Link>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
+        </div>
         </div>
       </section>
+
+
 
      
     </>

@@ -63,6 +63,7 @@ export const WishlistProvider = ({ children }) => {
   }, [state.items]);
 
   const addToWishlist = (product) => {
+    console.log('addToWishlist called with product:', product);
     dispatch({ type: 'ADD_TO_WISHLIST', payload: product });
   };
 
@@ -105,3 +106,4 @@ export const useWishlist = () => {
   }
   return context;
 };
+

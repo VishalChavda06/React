@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useCart } from '../context/CartContext';
+import { useWishlist } from '../context/WishlistContext';
 import '../styles/ImageBanner.css'
 
 const ImageBanner = () => {
@@ -7,6 +8,7 @@ const ImageBanner = () => {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const autoPlayRef = useRef(null);
   const { addToCart } = useCart();
+  const { addToWishlist } = useWishlist();
 
   const banners = [
     {
@@ -68,6 +70,11 @@ const ImageBanner = () => {
     console.log(`${banner.title} added to cart!`);
   };
 
+  const handleAddToWishlist = (banner) => {
+    addToWishlist(banner);
+    console.log(`${banner.title} added to wishlist!`);
+  };
+
   // Auto-play functionality
   useEffect(() => {
     if (isAutoPlaying) {
@@ -112,15 +119,26 @@ const ImageBanner = () => {
                       <h2 className="banner-title">{banner.title}</h2>
                       <p className="banner-subtitle">{banner.subtitle}</p>
                       <div className="banner-price">${banner.price}</div>
-                      <button 
-                        className="banner-button"
-                        onClick={() => handleAddToCart(banner)}
-                      >
-                        {banner.buttonText}
-                        <svg className="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M5 12h14M12 5l7 7-7 7" />
-                        </svg>
-                      </button>
+                      <div className="banner-buttons">
+                        <button 
+                          className="banner-button"
+                          onClick={() => handleAddToCart(banner)}
+                        >
+                          {banner.buttonText}
+                          <svg className="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                          </svg>
+                        </button>
+                        <button 
+                          className="banner-wishlist-button"
+                          onClick={() => handleAddToWishlist(banner)}
+                          title="Add to wishlist"
+                        >
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>

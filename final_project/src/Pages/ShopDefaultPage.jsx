@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CiFilter, CiHeart, CiShoppingCart } from 'react-icons/ci';
+import { useWishlist } from '../context/WishlistContext';
 
 const ShopDefaultPage = () => {
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   const [gridView, setGridView] = useState(4); // 2, 3, or 4 columns
   const [sortBy, setSortBy] = useState('best-selling');
   const [showSaleOnly, setShowSaleOnly] = useState(false);
@@ -11,6 +13,14 @@ const ShopDefaultPage = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [priceRange, setPriceRange] = useState([0, 500]);
+
+  const handleWishlistToggle = (product) => {
+    if (isInWishlist(product.id)) {
+      removeFromWishlist(product);
+    } else {
+      addToWishlist(product);
+    }
+  };
 
   // Mock product data with working placeholder images
   const products = [
@@ -295,68 +305,78 @@ const ShopDefaultPage = () => {
         {/* Products Grid */}
         <div className={`grid ${getGridClasses()} gap-6 mb-8`}>
           {currentProducts.map((product) => (
-            <div key={product.id} className="group bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
-              {/* Product Image */}
-              <div className="relative overflow-hidden rounded-t-lg">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                {product.isOnSale && (
-                  <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full font-medium">
-                    {product.discount}
-                  </div>
-                )}
-                
-                {/* Action Buttons */}
-                <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors">
-                    <CiHeart className="text-gray-600" />
-                  </button>
-                  <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors">
-                    <svg className="w-4 h-4 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </button>
-                  <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors">
-                    <svg className="w-4 h-4 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                      <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
-                    </svg>
-                  </button>
-                </div>
+            <div key={product.id} className="group bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 relative">
+              {/* Action Buttons - Outside Link to prevent conflicts */}
+              <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                <button 
+                  onClick={() => handleWishlistToggle(product)}
+                  className={`w-8 h-8 rounded-full flex items-center justify-center shadow-md transition-colors ${
+                    isInWishlist(product.id) 
+                      ? 'bg-red-500 hover:bg-red-600' 
+                      : 'bg-white hover:bg-gray-50'
+                  }`}
+                  title={isInWishlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
+                >
+                  <CiHeart className={`${isInWishlist(product.id) ? 'text-white' : 'text-gray-600'}`} />
+                </button>
+                <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors">
+                  <svg className="w-4 h-4 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </button>
+                <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors">
+                  <svg className="w-4 h-4 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                    <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+                  </svg>
+                </button>
               </div>
 
-              {/* Product Info */}
-              <div className="p-4">
-                <h3 className="font-medium text-gray-900 mb-2 line-clamp-2">{product.name}</h3>
-                
-                {/* Price */}
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-lg font-semibold text-blue-600">${product.salePrice}</span>
+              <Link to={`/product/${product.id}`} className="block">
+                {/* Product Image */}
+                <div className="relative overflow-hidden rounded-t-lg">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
                   {product.isOnSale && (
-                    <span className="text-sm text-gray-500 line-through">${product.originalPrice}</span>
+                    <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full font-medium">
+                      {product.discount}
+                    </div>
                   )}
                 </div>
 
-                {/* Color Options */}
-                <div className="flex gap-2 mb-4">
-                  {product.colors.map((color, index) => (
-                    <div
-                      key={index}
-                      className="w-4 h-4 rounded-full border-2 border-gray-300 cursor-pointer hover:border-gray-400"
-                      style={{ backgroundColor: color }}
-                    />
-                  ))}
-                </div>
+                {/* Product Info */}
+                <div className="p-4">
+                  <h3 className="font-medium text-gray-900 mb-2 line-clamp-2">{product.name}</h3>
+                  
+                  {/* Price */}
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-lg font-semibold text-blue-600">${product.salePrice}</span>
+                    {product.isOnSale && (
+                      <span className="text-sm text-gray-500 line-through">${product.originalPrice}</span>
+                    )}
+                  </div>
 
-                {/* Add to Cart Button */}
-                <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
-                  <CiShoppingCart />
-                  Add To Cart
-                </button>
-              </div>
+                  {/* Color Options */}
+                  <div className="flex gap-2 mb-4">
+                    {product.colors.map((color, index) => (
+                      <div
+                        key={index}
+                        className="w-4 h-4 rounded-full border-2 border-gray-300 cursor-pointer hover:border-gray-400"
+                        style={{ backgroundColor: color }}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Add to Cart Button */}
+                  <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
+                    <CiShoppingCart />
+                    Add To Cart
+                  </button>
+                </div>
+              </Link>
             </div>
           ))}
         </div>

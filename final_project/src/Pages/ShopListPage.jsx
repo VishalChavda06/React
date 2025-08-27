@@ -325,95 +325,97 @@ const ShopListPage = () => {
         {/* Products List View */}
         <div className={`${getListLayoutClasses()} mb-8`}>
           {currentProducts.map((product) => (
-            <div key={product.id} className="group bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 border border-gray-100 h-full">
-              <div className="flex flex-col lg:flex-row h-full">
-                {/* Product Image */}
-                <div className="relative overflow-hidden rounded-t-lg lg:rounded-l-lg lg:rounded-t-none lg:w-80 lg:h-80 w-full h-64 flex-shrink-0">
-                  <img
-                    src={hoveredProduct === product.id ? product.hoverImage : product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover transition-opacity duration-300"
-                    onMouseEnter={() => setHoveredProduct(product.id)}
-                    onMouseLeave={() => setHoveredProduct(null)}
-                  />
-                  {product.isOnSale && (
-                    <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full font-medium">
-                      {product.discount}
-                    </div>
-                  )}
-                  
-                  {/* Action Buttons */}
-                  <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <button 
-                      onClick={() => handleWishlistToggle(product)}
-                      className={`w-8 h-8 rounded-full flex items-center justify-center shadow-md transition-colors ${
-                        isInWishlist(product.id) 
-                          ? 'bg-red-500 hover:bg-red-600' 
-                          : 'bg-white hover:bg-gray-50'
-                      }`}
-                      title={isInWishlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
-                    >
-                      <CiHeart className={`${isInWishlist(product.id) ? 'text-white' : 'text-gray-600'}`} />
-                    </button>
-                    <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors">
-                      <svg className="w-4 h-4 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </button>
-                    <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors">
-                      <svg className="w-4 h-4 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                        <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-
-                {/* Product Info */}
-                <div className="flex-1 p-4 lg:p-6 flex flex-col">
-                  <div className="flex flex-col flex-1">
-                    {/* Header */}
-                    <div className="mb-4">
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2">{product.name}</h3>
-                      
-                      {/* Price */}
-                      <div className="flex items-center gap-2 mb-3">
-                        <span className="text-2xl font-bold text-blue-600">${product.salePrice}</span>
-                        {product.isOnSale && (
-                          <span className="text-lg text-gray-500 line-through">${product.originalPrice}</span>
-                        )}
-                      </div>
-
-                      {/* Description */}
-                      <p className="text-gray-600 text-sm lg:text-base leading-relaxed mb-4 line-clamp-3">
-                        {product.description}
-                      </p>
-                    </div>
-
-                    {/* Color Options */}
-                    <div className="mb-6">
-                      <span className="text-sm font-medium text-gray-700 mb-2 block">Color:</span>
-                      <div className="flex gap-2">
-                        {product.colors.map((color, index) => (
-                          <div
-                            key={index}
-                            className="w-6 h-6 rounded-full border-2 border-gray-300 cursor-pointer hover:border-gray-400 transition-colors"
-                            style={{ backgroundColor: color }}
-                          />
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Footer */}
-                    <div className="mt-auto">
-                      <button className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 font-medium">
-                        <CiShoppingCart />
-                        Add To Cart
-                      </button>
-                    </div>
-                  </div>
-                </div>
+            <div key={product.id} className="group bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 border border-gray-100 h-full relative">
+              {/* Action Buttons - Outside Link to prevent conflicts */}
+              <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                <button 
+                  onClick={() => handleWishlistToggle(product)}
+                  className={`w-8 h-8 rounded-full flex items-center justify-center shadow-md transition-colors ${
+                    isInWishlist(product.id) 
+                      ? 'bg-red-500 hover:bg-red-600' 
+                      : 'bg-white hover:bg-gray-50'
+                  }`}
+                  title={isInWishlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
+                >
+                  <CiHeart className={`${isInWishlist(product.id) ? 'text-white' : 'text-gray-600'}`} />
+                </button>
+                <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors">
+                  <svg className="w-4 h-4 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </button>
+                <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors">
+                  <svg className="w-4 h-4 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                    <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+                  </svg>
+                </button>
               </div>
+
+              <Link to={`/product/${product.id}`} className="block h-full">
+                <div className="flex flex-col lg:flex-row h-full">
+                  {/* Product Image */}
+                  <div className="relative overflow-hidden rounded-t-lg lg:rounded-l-lg lg:rounded-t-none lg:w-80 lg:h-80 w-full h-64 flex-shrink-0">
+                    <img
+                      src={hoveredProduct === product.id ? product.hoverImage : product.image}
+                      alt={product.name}
+                      className="w-full h-full object-cover transition-opacity duration-300"
+                      onMouseEnter={() => setHoveredProduct(product.id)}
+                      onMouseLeave={() => setHoveredProduct(null)}
+                    />
+                    {product.isOnSale && (
+                      <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full font-medium">
+                        {product.discount}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Product Info */}
+                  <div className="flex-1 p-4 lg:p-6 flex flex-col">
+                    <div className="flex flex-col flex-1">
+                      {/* Header */}
+                      <div className="mb-4">
+                        <h3 className="text-xl font-semibold text-gray-900 mb-2">{product.name}</h3>
+                        
+                        {/* Price */}
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className="text-2xl font-bold text-blue-600">${product.salePrice}</span>
+                          {product.isOnSale && (
+                            <span className="text-lg text-gray-500 line-through">${product.originalPrice}</span>
+                          )}
+                        </div>
+
+                        {/* Description */}
+                        <p className="text-gray-600 text-sm lg:text-base leading-relaxed mb-4 line-clamp-3">
+                          {product.description}
+                        </p>
+                      </div>
+
+                      {/* Color Options */}
+                      <div className="mb-6">
+                        <span className="text-sm font-medium text-gray-700 mb-2 block">Color:</span>
+                        <div className="flex gap-2">
+                          {product.colors.map((color, index) => (
+                            <div
+                              key={index}
+                              className="w-6 h-6 rounded-full border-2 border-gray-300 cursor-pointer hover:border-gray-400 transition-colors"
+                              style={{ backgroundColor: color }}
+                            />
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Footer */}
+                      <div className="mt-auto">
+                        <button className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 font-medium">
+                          <CiShoppingCart />
+                          Add To Cart
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Link>
             </div>
           ))}
         </div>
