@@ -13,6 +13,7 @@ import ShopDefaultPage from '../Pages/ShopDefaultPage';
 import ShopListPage from '../Pages/ShopListPage';
 import WishlistPage from '../Pages/WishlistPage';
 import ProductDetailsPage from '../Pages/ProductDetailsPage';
+import FaqPage from '../Pages/FaqPage';
 
 
 const AppRouter = () => {
@@ -32,7 +33,7 @@ const AppRouter = () => {
         <Route path='/shop-list' element={<ShopListPage />} />
         <Route path='/wishlist' element={<WishlistPage />} />
         <Route path='/product/:productId' element={<ProductDetailsPage />} />
-
+        <Route path='/faq' element={<FaqPage />} />
         {/* Add more routes here as needed */}
       </Routes>
       <Footer />

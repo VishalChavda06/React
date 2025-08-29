@@ -57,6 +57,7 @@ const Navbar = () => {
         { label: "About Us", link: "/about" },
         { label: "Contact", link: "/contact" },
         { label: "FAQ", link: "/faq" },
+        { label: "Location", link: "/location" },
         { label: "Terms & Conditions", link: "/terms" },
         { label: "Privacy Policy", link: "/privacy" },
       ]
