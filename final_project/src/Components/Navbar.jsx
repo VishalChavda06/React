@@ -26,19 +26,7 @@ const Navbar = () => {
         { label: "Shop Default", link: "/shop-default" },
         { label: "Shop List", link: "/shop-list" },
         { label: "Wishlist", link: "/wishlist" },
-        { label: "Shop Details", link: "/shop-details" },
-        { label: "Shop Cart", link: "/shop-cart" },
         { label: "Shop Checkout", link: "/shop-checkout" },
-      ]
-    },
-    {
-      label: "PRODUCTS",
-      hasDropdown: true,
-      dropdownItems: [
-        { label: "Product Grid", link: "/products-grid" },
-        { label: "Product List", link: "/products-list" },
-        { label: "Product Details", link: "/product-details" },
-        { label: "Product Categories", link: "/categories" },
       ]
     },
     {
@@ -57,16 +45,9 @@ const Navbar = () => {
         { label: "About Us", link: "/about" },
         { label: "Contact", link: "/contact" },
         { label: "FAQ", link: "/faq" },
-        { label: "Location", link: "/location" },
-        { label: "Terms & Conditions", link: "/terms" },
-        { label: "Privacy Policy", link: "/privacy" },
+        { label: "Location", link: "/location" }
       ]
     },
-    {
-      label: "DEN",
-      hasDropdown: false,
-      link: "/den"
-    }
   ];
 
   const handleMouseEnter = (label) => {
