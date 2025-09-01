@@ -65,7 +65,6 @@ const ContactPage = () => {
           </form>
         </div>
       </div>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil deleniti necessitatibus enim repellat sequi? Vel officiis, expedita minima quas harum minus cum saepe nisi enim. Voluptas tempore autem modi vel.</p>
     </>
   )
 }
