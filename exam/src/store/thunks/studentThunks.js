@@ -15,9 +15,7 @@ import {
   deleteStudentSuccess,
   deleteStudentFailure
 } from '../actions/studentActions'
-
-// Base URL for API - you can change this to your actual API endpoint
-const API_BASE_URL = 'http://localhost:3001/api' // Adjust this to your API URL
+import { studentAPI } from '../../services/api'
 
 // Fetch all students thunk
 export const fetchStudents = () => {
@@ -25,18 +23,12 @@ export const fetchStudents = () => {
     dispatch(fetchStudentsStart())
     
     try {
-      // TODO: Replace with your actual API endpoint
-      const response = await fetch(`${API_BASE_URL}/students`)
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      
-      const students = await response.json()
-      dispatch(fetchStudentsSuccess(students))
+      const response = await studentAPI.getAllStudents()
+      dispatch(fetchStudentsSuccess(response.data))
     } catch (error) {
       console.error('Error fetching students:', error)
-      dispatch(fetchStudentsFailure(error.message))
+      const errorMessage = error.response?.data?.message || error.message || 'Failed to fetch students'
+      dispatch(fetchStudentsFailure(errorMessage))
     }
   }
 }
@@ -47,21 +39,21 @@ export const fetchStudent = (studentId) => {
     dispatch(fetchStudentStart())
     
     try {
-      // TODO: Replace with your actual API endpoint
-      const response = await fetch(`${API_BASE_URL}/students/${studentId}`)
-      
-      if (!response.ok) {
-        if (response.status === 404) {
-          throw new Error('Student not found')
-        }
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      
-      const student = await response.json()
-      dispatch(fetchStudentSuccess(student))
+      const response = await studentAPI.getStudentById(studentId)
+      dispatch(fetchStudentSuccess(response.data))
     } catch (error) {
       console.error('Error fetching student:', error)
-      dispatch(fetchStudentFailure(error.message))
+      let errorMessage = 'Failed to fetch student'
+      
+      if (error.response?.status === 404) {
+        errorMessage = 'Student not found'
+      } else if (error.response?.data?.message) {
+        errorMessage = error.response.data.message
+      } else if (error.message) {
+        errorMessage = error.message
+      }
+      
+      dispatch(fetchStudentFailure(errorMessage))
     }
   }
 }
@@ -72,25 +64,13 @@ export const addStudent = (studentData) => {
     dispatch(addStudentStart())
     
     try {
-      // TODO: Replace with your actual API endpoint
-      const response = await fetch(`${API_BASE_URL}/students`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(studentData),
-      })
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      
-      const newStudent = await response.json()
-      dispatch(addStudentSuccess(newStudent))
-      return newStudent
+      const response = await studentAPI.createStudent(studentData)
+      dispatch(addStudentSuccess(response.data))
+      return response.data
     } catch (error) {
       console.error('Error adding student:', error)
-      dispatch(addStudentFailure(error.message))
+      const errorMessage = error.response?.data?.message || error.message || 'Failed to add student'
+      dispatch(addStudentFailure(errorMessage))
       throw error
     }
   }
@@ -102,25 +82,13 @@ export const updateStudent = (studentId, studentData) => {
     dispatch(updateStudentStart())
     
     try {
-      // TODO: Replace with your actual API endpoint
-      const response = await fetch(`${API_BASE_URL}/students/${studentId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(studentData),
-      })
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      
-      const updatedStudent = await response.json()
-      dispatch(updateStudentSuccess(updatedStudent))
-      return updatedStudent
+      const response = await studentAPI.updateStudent(studentId, studentData)
+      dispatch(updateStudentSuccess(response.data))
+      return response.data
     } catch (error) {
       console.error('Error updating student:', error)
-      dispatch(updateStudentFailure(error.message))
+      const errorMessage = error.response?.data?.message || error.message || 'Failed to update student'
+      dispatch(updateStudentFailure(errorMessage))
       throw error
     }
   }
@@ -132,19 +100,12 @@ export const deleteStudent = (studentId) => {
     dispatch(deleteStudentStart())
     
     try {
-      // TODO: Replace with your actual API endpoint
-      const response = await fetch(`${API_BASE_URL}/students/${studentId}`, {
-        method: 'DELETE',
-      })
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      
+      await studentAPI.deleteStudent(studentId)
       dispatch(deleteStudentSuccess(studentId))
     } catch (error) {
       console.error('Error deleting student:', error)
-      dispatch(deleteStudentFailure(error.message))
+      const errorMessage = error.response?.data?.message || error.message || 'Failed to delete student'
+      dispatch(deleteStudentFailure(errorMessage))
       throw error
     }
   }

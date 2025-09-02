@@ -1,18 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Row, Col, Card, Form, Button, Alert, Spinner } from 'react-bootstrap'
 import { ArrowLeft, Save } from 'react-bootstrap-icons'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { addStudentMock } from '../store/thunks/studentThunks'
+import { addStudent, updateStudent, fetchStudent } from '../store/thunks/studentThunks'
 import { clearStudentMessages } from '../store/actions/studentActions'
 
 const StudentForm = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const { id } = useParams()
+  const isEditMode = Boolean(id)
+  
   const { 
     addStudentLoading, 
     addStudentError, 
-    addStudentSuccess 
+    addStudentSuccess,
+    updateStudentLoading,
+    updateStudentError,
+    updateStudentSuccess,
+    selectedStudent,
+    studentLoading
   } = useSelector(state => state.students)
   
   const [formData, setFormData] = useState({
@@ -26,12 +34,34 @@ const StudentForm = () => {
   })
 
   useEffect(() => {
+    // Load student data for editing
+    if (isEditMode && id) {
+      dispatch(fetchStudent(id))
+    }
+  }, [isEditMode, id, dispatch])
+
+  useEffect(() => {
+    // Populate form with student data when editing
+    if (isEditMode && selectedStudent) {
+      setFormData({
+        name: selectedStudent.name || '',
+        email: selectedStudent.email || '',
+        phone: selectedStudent.phone || '',
+        course: selectedStudent.course || '',
+        address: selectedStudent.address || '',
+        dateOfBirth: selectedStudent.dateOfBirth || '',
+        status: selectedStudent.status || 'Active'
+      })
+    }
+  }, [isEditMode, selectedStudent])
+
+  useEffect(() => {
     // Navigate to students list after successful submission
-    if (addStudentSuccess) {
+    if (addStudentSuccess || updateStudentSuccess) {
       dispatch(clearStudentMessages())
       navigate('/students')
     }
-  }, [addStudentSuccess, navigate, dispatch])
+  }, [addStudentSuccess, updateStudentSuccess, navigate, dispatch])
 
   const handleChange = (e) => {
     setFormData({
@@ -43,7 +73,11 @@ const StudentForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await dispatch(addStudentMock(formData))
+      if (isEditMode) {
+        await dispatch(updateStudent(id, formData))
+      } else {
+        await dispatch(addStudent(formData))
+      }
     } catch (error) {
       console.error('Error submitting form:', error)
     }
@@ -57,15 +91,24 @@ const StudentForm = () => {
             <Button as={Link} to="/students" variant="outline-secondary" className="me-3">
               <ArrowLeft size={16} />
             </Button>
-            <h2>Add New Student</h2>
+            <h2>{isEditMode ? 'Edit Student' : 'Add New Student'}</h2>
           </div>
         </Col>
       </Row>
 
-      {addStudentError && (
+      {(addStudentError || updateStudentError) && (
         <Alert variant="danger" dismissible onClose={() => dispatch(clearStudentMessages())}>
-          {addStudentError}
+          {addStudentError || updateStudentError}
         </Alert>
+      )}
+
+      {studentLoading && (
+        <Container className="text-center mt-5">
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+          <p className="mt-3">Loading student data...</p>
+        </Container>
       )}
 
       <Row>
@@ -179,17 +222,17 @@ const StudentForm = () => {
                   <Button 
                     type="submit" 
                     variant="primary" 
-                    disabled={addStudentLoading}
+                    disabled={addStudentLoading || updateStudentLoading}
                   >
-                    {addStudentLoading ? (
+                    {(addStudentLoading || updateStudentLoading) ? (
                       <>
                         <Spinner size="sm" className="me-2" />
-                        Saving...
+                        {isEditMode ? 'Updating...' : 'Saving...'}
                       </>
                     ) : (
                       <>
                         <Save className="me-2" size={16} />
-                        Save Student
+                        {isEditMode ? 'Update Student' : 'Save Student'}
                       </>
                     )}
                   </Button>

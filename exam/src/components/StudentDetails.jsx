@@ -3,7 +3,7 @@ import { Container, Row, Col, Card, Button, Badge, ListGroup, Alert, Spinner } f
 import { ArrowLeft, PencilSquare, Trash, Envelope, Telephone, GeoAlt, Calendar, Book, Person } from 'react-bootstrap-icons'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchStudentMock, deleteStudentMock } from '../store/thunks/studentThunks'
+import { fetchStudent, deleteStudent } from '../store/thunks/studentThunks'
 import { clearStudentMessages, clearSelectedStudent } from '../store/actions/studentActions'
 
 const StudentDetails = () => {
@@ -21,7 +21,7 @@ const StudentDetails = () => {
 
   useEffect(() => {
     if (id) {
-      dispatch(fetchStudentMock(id))
+      dispatch(fetchStudent(id))
     }
     
     // Cleanup when component unmounts
@@ -41,7 +41,7 @@ const StudentDetails = () => {
   const handleDeleteStudent = async () => {
     if (window.confirm('Are you sure you want to delete this student? This action cannot be undone.')) {
       try {
-        await dispatch(deleteStudentMock(id))
+        await dispatch(deleteStudent(id))
       } catch (err) {
         console.error('Failed to delete student:', err)
       }
@@ -203,7 +203,11 @@ const StudentDetails = () => {
             </Card.Header>
             <Card.Body>
               <div className="d-grid gap-2">
-                <Button variant="warning">
+                <Button 
+                  as={Link} 
+                  to={`/edit-student/${selectedStudent.id}`} 
+                  variant="warning"
+                >
                   <PencilSquare className="me-2" size={16} />
                   Edit Student
                 </Button>

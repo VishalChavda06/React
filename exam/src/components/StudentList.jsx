@@ -3,7 +3,7 @@ import { Container, Row, Col, Card, Button, Badge, Alert, Spinner } from 'react-
 import { PersonPlus, Eye, PencilSquare, Trash, People } from 'react-bootstrap-icons'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchStudentsMock, deleteStudentMock } from '../store/thunks/studentThunks'
+import { fetchStudents, deleteStudent } from '../store/thunks/studentThunks'
 import { clearStudentMessages } from '../store/actions/studentActions'
 
 const StudentList = () => {
@@ -19,7 +19,7 @@ const StudentList = () => {
 
   useEffect(() => {
     // Fetch students when component mounts
-    dispatch(fetchStudentsMock())
+    dispatch(fetchStudents())
   }, [dispatch])
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const StudentList = () => {
   const handleDeleteStudent = async (studentId) => {
     if (window.confirm('Are you sure you want to delete this student?')) {
       try {
-        await dispatch(deleteStudentMock(studentId))
+        await dispatch(deleteStudent(studentId))
       } catch (err) {
         console.error('Failed to delete student:', err)
       }
@@ -56,7 +56,7 @@ const StudentList = () => {
         <Alert variant="danger">
           {studentsError}
         </Alert>
-        <Button onClick={() => dispatch(fetchStudentsMock())} variant="outline-primary">
+        <Button onClick={() => dispatch(fetchStudents())} variant="outline-primary">
           Try Again
         </Button>
       </Container>
@@ -119,7 +119,12 @@ const StudentList = () => {
                       <Eye className="me-1" size={14} />
                       View
                     </Button>
-                    <Button variant="outline-warning" size="sm">
+                    <Button 
+                      as={Link} 
+                      to={`/edit-student/${student.id}`} 
+                      variant="outline-warning" 
+                      size="sm"
+                    >
                       <PencilSquare className="me-1" size={14} />
                       Edit
                     </Button>
