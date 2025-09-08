@@ -12,6 +12,7 @@ const Register = () => {
     confirmPassword: ''
   })
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
   const [loading, setLoading] = useState(false)
   const [googleLoading, setGoogleLoading] = useState(false)
 
@@ -23,13 +24,15 @@ const Register = () => {
       ...formData,
       [e.target.name]: e.target.value
     })
-    // Clear error when user starts typing
+    // Clear error and success when user starts typing
     if (error) setError('')
+    if (success) setSuccess('')
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
+    setSuccess('')
 
     // Validation
     if (formData.password !== formData.confirmPassword) {
@@ -42,16 +45,43 @@ const Register = () => {
       return
     }
 
+    if (!formData.name.trim()) {
+      setError('Name is required')
+      return
+    }
+
     setLoading(true)
 
     try {
-      const result = await signup(formData.email, formData.password)
+      console.log('Attempting registration with:', formData.email)
+      // Always use JSON Server for manual registration
+      const result = await signup(
+        formData.name, 
+        formData.email, 
+        formData.password, 
+        'json'
+      )
+      console.log('Registration result:', result)
       if (result.success) {
-        navigate('/students')
+        console.log('Registration successful, showing success message')
+        setSuccess('Account created successfully! Please login to continue.')
+        // Clear form
+        setFormData({
+          name: '',
+          email: '',
+          password: '',
+          confirmPassword: ''
+        })
+        // Redirect to login after 2 seconds
+        setTimeout(() => {
+          navigate('/login')
+        }, 2000)
       } else {
+        console.log('Registration failed:', result.error)
         setError(result.error)
       }
     } catch (err) {
+      console.error('Registration error:', err)
       setError('Failed to create account')
     } finally {
       setLoading(false)
@@ -90,8 +120,22 @@ const Register = () => {
               {error && (
                 <Alert variant="danger" className="mb-3">
                   {error}
+                  {error.includes('already registered') && (
+                    <div className="mt-2">
+                      <Link to="/login" className="text-danger text-decoration-none fw-bold">
+                        Click here to sign in instead →
+                      </Link>
+                    </div>
+                  )}
                 </Alert>
               )}
+
+              {success && (
+                <Alert variant="success" className="mb-3">
+                  {success}
+                </Alert>
+              )}
+
 
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3">

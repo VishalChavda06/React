@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Container, Row, Col, Card, Form, Button, Alert, Spinner } from 'react-bootstrap'
-import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { Envelope, Lock, Google } from 'react-bootstrap-icons'
 
@@ -13,12 +13,8 @@ const Login = () => {
   const [loading, setLoading] = useState(false)
   const [googleLoading, setGoogleLoading] = useState(false)
 
-  const { login } = useAuth()
+  const { login, loginWithGoogle } = useAuth()
   const navigate = useNavigate()
-  const location = useLocation()
-
-  // Get the page the user was trying to access before login
-  const from = location.state?.from?.pathname || '/students'
 
   const handleChange = (e) => {
     setFormData({
@@ -32,17 +28,29 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
+
+    if (!formData.email || !formData.password) {
+      setError('Please fill in all fields')
+      return
+    }
+
     setLoading(true)
 
     try {
-      const result = await login(formData.email, formData.password)
+      console.log('Attempting login with:', formData.email)
+      // Always use JSON Server for manual login
+      const result = await login(formData.email, formData.password, 'json')
+      console.log('Login result:', result)
       if (result.success) {
-        navigate(from, { replace: true })
+        console.log('Login successful, navigating to students')
+        navigate('/students')
       } else {
+        console.log('Login failed:', result.error)
         setError(result.error)
       }
     } catch (err) {
-      setError('Failed to log in')
+      console.error('Login error:', err)
+      setError('Failed to sign in')
     } finally {
       setLoading(false)
     }
@@ -53,14 +61,14 @@ const Login = () => {
     setGoogleLoading(true)
 
     try {
-      const result = await signUpWithGoogle()
+      const result = await loginWithGoogle()
       if (result.success) {
-        navigate(from, { replace: true })
+        navigate('/students')
       } else {
         setError(result.error)
       }
     } catch (err) {
-      setError('Failed to log in with Google')
+      setError('Failed to sign in with Google')
     } finally {
       setGoogleLoading(false)
     }
@@ -80,8 +88,16 @@ const Login = () => {
               {error && (
                 <Alert variant="danger" className="mb-3">
                   {error}
+                  {error.includes('No account found') && (
+                    <div className="mt-2">
+                      <Link to="/register" className="text-danger text-decoration-none fw-bold">
+                        Click here to create an account →
+                      </Link>
+                    </div>
+                  )}
                 </Alert>
               )}
+
 
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3">

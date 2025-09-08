@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // Create axios instance with base configuration
 const api = axios.create({
-  baseURL: 'http://localhost:3001',
+  baseURL: 'http://localhost:3002',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -52,6 +52,24 @@ export const studentAPI = {
   
   // Search students (optional)
   searchStudents: (query) => api.get(`/students?q=${query}`),
+}
+
+// Authentication API endpoints
+export const authAPI = {
+  // Register new user
+  register: (userData) => api.post('/users', userData),
+  
+  // Login user
+  login: (email, password) => api.get(`/users?email=${email}&password=${password}`),
+  
+  // Get user by email
+  getUserByEmail: (email) => api.get(`/users?email=${email}`),
+  
+  // Get user by ID
+  getUserById: (id) => api.get(`/users/${id}`),
+  
+  // Update user
+  updateUser: (id, userData) => api.put(`/users/${id}`, userData),
 }
 
 export default api

@@ -45,7 +45,7 @@ A comprehensive React application for managing student information with Redux st
    ```bash
    npm run json-server
    ```
-   This will start the JSON server on `http://localhost:3001`
+   This will start the JSON server on `http://localhost:3000`
 
 4. **Start the React Development Server** (in a new terminal)
    ```bash

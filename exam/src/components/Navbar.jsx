@@ -21,14 +21,14 @@ const NavbarComponent = () => {
     const navigate = useNavigate();
     const { currentUser, logout } = useAuth();
 
-    const handleLogout = async () => {
-        try {
-            await logout();
-            navigate('/login');
-        } catch (error) {
-            console.error('Failed to log out:', error);
-        }
-    };
+      const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/login');
+    } catch (error) {
+      console.error('Failed to log out:', error);
+    }
+  };
 
     return (
         <>
